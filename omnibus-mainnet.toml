@@ -11,13 +11,14 @@ include = [
     "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
     "tomls/collaterals/weth.toml",
-    #    "tomls/collaterals/wsteth.toml",
-    #    "tomls/collaterals/susde.toml",
+    "tomls/omnibus-mainnet/collaterals/wsteth.toml",
+    "tomls/omnibus-mainnet/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-mainnet/pools/spartan-council-second.toml",
     "tomls/permit-all-transferCrossChain.toml",
 
     # Cannon Registry Mainnet Configuration
@@ -120,6 +121,12 @@ defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 defaultValue = "1"
 
 [setting.pool_owner]
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+
+[setting.sc_second_pool_id]
+defaultValue = "2"
+
+[setting.second_pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.ccip_router]

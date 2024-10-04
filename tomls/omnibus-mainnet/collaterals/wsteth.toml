@@ -1,0 +1,30 @@
+[pull.wsteth]
+source = "<%= settings.wsteth_package %>"
+
+[var.wsteth_collateral_config]
+max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
+
+[invoke.configureWstethCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configureWstethCollateral.args]]
+tokenAddress = "<%= imports.wsteth.contracts.Token.address %>"
+oracleNodeId = "<%= extras.wsteth_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('1.5') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.01') %>"
+minDelegationD18 = "<%= parseEther('0.01') %>"
+depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_wsteth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_second_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_second_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_wsteth %>", issuanceRatioD18 = 0 },
+]

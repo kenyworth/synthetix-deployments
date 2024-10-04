@@ -1,0 +1,31 @@
+[pull.susde]
+source = "<%= settings.susde_package %>"
+
+[var.susde_collateral_config]
+susde_max_collateral_limit = "<%= parseEther(String(10_000_000)) %>"
+
+[invoke.configureSusdeCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configureSusdeCollateral.args]]
+tokenAddress = "<%= imports.susde.contracts.Token.address %>"
+oracleNodeId = "<%= extras.susde_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRatioD18 = "<%= parseEther('1.01') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = true
+
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_sUSDe]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_second_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_second_pool_id %>",
+    "<%= settings.susde_address %>",
+    { collateralLimitD18 = "<%= settings.sUSDe_max_collateral_limit %>", issuanceRatioD18 = 0 },
+]
